@@ -1,6 +1,24 @@
 =IFERROR(
     LOOKUP(
         2,
+        1 / (ISNUMBER(SEARCH(LOWER(A2), LOWER(ABC!B2:B1000)))),
+        IF(
+            EXACT(
+                LEFT(UPPER(D2), 5),
+                LEFT(UPPER(INDEX(ABC!C2:C1000, MATCH(TRUE, ISNUMBER(SEARCH(LOWER(A2), LOWER(ABC!B2:B1000))), 0))), 5)
+            ),
+            "Match: " & INDEX(ABC!C2:C1000, MATCH(TRUE, ISNUMBER(SEARCH(LOWER(A2), LOWER(ABC!B2:B1000))), 0)),
+            ""
+        )
+    ),
+    "No Match"
+)
+
+
+
+=IFERROR(
+    LOOKUP(
+        2,
         1 / (ISNUMBER(SEARCH(LOWER(A1), LOWER(ABC!B:B)))),
         IF(
             EXACT(
