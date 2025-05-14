@@ -3,6 +3,26 @@
         2,
         1 / (ISNUMBER(SEARCH(LOWER(A2), LOWER(ABC!B2:B1000)))),
         LET(
+            matched_abc_role_full, INDEX(ABC!C2:C1000, MATCH(TRUE, ISNUMBER(SEARCH(LOWER(A2), LOWER(ABC!B2:B1000))), 0)),
+            extracted_abc_role, IF(ISNUMBER(FIND(": ", matched_abc_role_full)), MID(matched_abc_role_full, FIND(": ", matched_abc_role_full) + 2, 255), matched_abc_role_full),
+            first_5_src_role, LEFT(UPPER(D2), 5),
+            first_5_abc_role, LEFT(UPPER(extracted_abc_role), 5),
+            IF(
+                EXACT(first_5_src_role, first_5_abc_role),
+                "Match: " & extracted_abc_role,
+                ""
+            )
+        )
+    ),
+    "No Match"
+)
+
+
+=IFERROR(
+    LOOKUP(
+        2,
+        1 / (ISNUMBER(SEARCH(LOWER(A2), LOWER(ABC!B2:B1000)))),
+        LET(
             matched_abc_role, INDEX(ABC!C2:C1000, MATCH(TRUE, ISNUMBER(SEARCH(LOWER(A2), LOWER(ABC!B2:B1000))), 0)),
             extracted_abc_role, IF(ISNUMBER(FIND(": ", matched_abc_role)), MID(matched_abc_role, FIND(": ", matched_abc_role) + 2, 255), matched_abc_role),
             IF(
