@@ -1,4 +1,21 @@
 =IFERROR(
+    LOOKUP(
+        2,
+        1 / (ISNUMBER(SEARCH(LOWER(A1), LOWER(ABC!B:B)))),
+        IF(
+            EXACT(
+                LEFT(UPPER(D1), 5),
+                LEFT(UPPER(INDEX(ABC!C:C, ROW(INDEX(ABC!B:B, MATCH(TRUE, ISNUMBER(SEARCH(LOWER(A1), LOWER(ABC!B:B))), 0))))), 5)
+            ),
+            "Match: " & INDEX(ABC!C:C, ROW(INDEX(ABC!B:B, MATCH(TRUE, ISNUMBER(SEARCH(LOWER(A1), LOWER(ABC!B:B))), 0)))),
+            ""
+        )
+    ),
+    "No Match"
+)
+
+
+=IFERROR(
     IF(
         SUMPRODUCT(--ISNUMBER(SEARCH(LOWER(A1), LOWER(ABC!B:B))))>0,
         LET(
