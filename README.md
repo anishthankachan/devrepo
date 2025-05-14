@@ -1,6 +1,26 @@
 =IFERROR(
     LOOKUP(
         2,
+        1 / (ISNUMBER(SEARCH(LOWER(A2), LOWER(AMH!B2:B1000)))),
+        LET(
+            matched_amh_role_full, INDEX(AMH!C2:C1000, MATCH(TRUE, ISNUMBER(SEARCH(LOWER(A2), LOWER(AMH!B2:B1000))), 0)),
+            extracted_amh_role, IF(ISNUMBER(FIND(": ", matched_amh_role_full)), MID(matched_amh_role_full, FIND(": ", matched_amh_role_full) + 2, 255), matched_amh_role_full),
+            first_5_src_role, LEFT(UPPER(D2), 5),
+            IF(
+                ISNUMBER(SEARCH(first_5_src_role, UPPER(extracted_amh_role))),
+                "Match: " & extracted_amh_role,
+                ""
+            )
+        )
+    ),
+    "No Match"
+)
+
+
+
+=IFERROR(
+    LOOKUP(
+        2,
         1 / (ISNUMBER(SEARCH(LOWER(A2), LOWER(ABC!B2:B1000)))),
         LET(
             matched_abc_role_full, INDEX(ABC!C2:C1000, MATCH(TRUE, ISNUMBER(SEARCH(LOWER(A2), LOWER(ABC!B2:B1000))), 0)),
