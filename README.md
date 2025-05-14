@@ -1,3 +1,21 @@
+=IFERROR(
+    LOOKUP(
+        2,
+        1 / (ISNUMBER(SEARCH(LOWER(A2), LOWER(ABC!B2:B1000)))),
+        LET(
+            matched_abc_role, INDEX(ABC!C2:C1000, MATCH(TRUE, ISNUMBER(SEARCH(LOWER(A2), LOWER(ABC!B2:B1000))), 0)),
+            extracted_abc_role, IF(ISNUMBER(FIND(": ", matched_abc_role)), MID(matched_abc_role, FIND(": ", matched_abc_role) + 2, 255), matched_abc_role),
+            IF(
+                EXACT(LEFT(UPPER(D2), 5), LEFT(UPPER(extracted_abc_role), 5)),
+                "Match: " & extracted_abc_role,
+                ""
+            )
+        )
+    ),
+    "No Match"
+)
+
+
 =IFERROR(INDEX(ABC!C2:C1000, MATCH(TRUE, ISNUMBER(FIND(LOWER(A2), LOWER(ABC!B2:B1000))), 0)), "No Email Match")
 
 
