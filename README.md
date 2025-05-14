@@ -1,3 +1,23 @@
+=IFERROR(
+    IF(
+        SUMPRODUCT(--ISNUMBER(SEARCH(LOWER(A1), LOWER(ABC!B:B))))>0,
+        LET(
+            matched_row, MATCH(TRUE, INDEX(ISNUMBER(SEARCH(LOWER(A1), LOWER(ABC!B:B))), 0), 0),
+            abc_role, INDEX(ABC!C:C, matched_row),
+            IF(
+                EXACT(LEFT(UPPER(D1), 5), LEFT(UPPER(abc_role), 5)),
+                "Match: "&abc_role,
+                "No Match"
+            )
+        ),
+        "No Match"
+    ),
+    "No Match"
+)
+
+
+
+
 
 Run it on the old server
 
